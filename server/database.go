@@ -8,7 +8,6 @@ import (
 )
 
 func getTableResult(table *sql.Rows) string{ 
-    //need rows from db query: http://go-database-sql.org/retrieving.html
     defer table.Close()
     var ip string
     for table.Next() { 

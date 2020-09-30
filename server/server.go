@@ -8,8 +8,8 @@ import (
     "log"
     "net/http"
     "os"
- 
     _ "strings"
+    "time"
 
 )
 
@@ -49,7 +49,6 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Method is not supported.", http.StatusNotFound)
         return
     }
-
     /*
     if EntryExists("ip", r.RemoteAddr[:strings.Index(r.RemoteAddr, ":")]) { 
         fmt.Fprintf(w, "ls")
@@ -57,11 +56,16 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
     */
 
     fmt.Fprintf(w, "ls ../")
-    
-
-
 }
 
+func checkExpire() {
+    for {
+        //do menu stuff
+        PrintBanner()
+        fmt.Println(time.Now().UTC())
+        time.Sleep(1000 * time.Millisecond)
+    }
+}
 
 func main() {
     if !isRoot()  {
@@ -69,13 +73,17 @@ func main() {
         os.Exit(1)
     }
     initializeMySQL()
+
+    go checkExpire()
+
+
     fileServer := http.FileServer(http.Dir("./static"))
     http.Handle("/", fileServer)
     http.HandleFunc("/form", formHandler)
     http.HandleFunc("/hello", helloHandler)
 
 
-    fmt.Printf("Starting server at port 8080\n")
+    fmt.Printf("Waiting for connections...\n")
     if err := http.ListenAndServe(":8080", nil); err != nil {
         log.Fatal(err)
     }

