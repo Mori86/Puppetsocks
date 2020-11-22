@@ -48,10 +48,10 @@ func AESDecrypt(key []byte, ct string) string{
 
 func CrossHatchEncrypt(key []byte, plaintext string) string { 
 	encode := Base64Encode(string(key))
-	return AESEncrypt([]byte(encode))
+	return AESEncrypt(key, encode)
 }
 
 func CrossHatchDecrypt(key []byte, ciphertext string) string { 
-	decrypt := AESDecrypt([]byte(ciphertext))
+	decrypt := AESDecrypt(key, ciphertext)
 	return Base64Decode(decrypt)
 }

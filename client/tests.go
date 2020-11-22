@@ -4,9 +4,17 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
+func TestIPGrab() { 
+	GetRealIP()
+	os.Exit(1)
+}
+
 func main() { 
+	fmt.Println("testing ip grabber...")
+	TestIPGrab()
 	//test encryption
 	var enc string
 	fmt.Println("testing base 64 encode: ", Base64Encode("thequickfoxjumpedoverthelazydog"))

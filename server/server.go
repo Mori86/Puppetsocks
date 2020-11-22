@@ -5,7 +5,7 @@ package main
 
 import (
     "fmt"
-    "log"
+    _ "log"
     "net/http"
     "os"
     _ "strings"
@@ -67,6 +67,7 @@ func checkExpire() {
     }
 }
 
+
 func main() {
     if !isRoot()  {
         fmt.Println("please run as root...")
@@ -74,9 +75,7 @@ func main() {
     }
     initializeMySQL()
 
-    go checkExpire()
-
-
+  
     fileServer := http.FileServer(http.Dir("./static"))
     http.Handle("/", fileServer)
     http.HandleFunc("/form", formHandler)
@@ -84,7 +83,12 @@ func main() {
 
 
     fmt.Printf("Waiting for connections...\n")
-    if err := http.ListenAndServe(":8080", nil); err != nil {
-        log.Fatal(err)
-    }
+    go  http.ListenAndServe(":8080", nil)
+
+
+   checkExpire()
+
+
+
+    
 }

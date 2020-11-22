@@ -46,6 +46,7 @@ func AESDecrypt(key []byte, ct string) string{
     return s
 }
 
+/*
 func CrossHatchEncrypt(key []byte, plaintext string) string { 
 	encode := Base64Encode(string(key))
 	return AESEncrypt([]byte(encode))
@@ -55,3 +56,4 @@ func CrossHatchDecrypt(key []byte, ciphertext string) string {
 	decrypt := AESDecrypt([]byte(ciphertext))
 	return Base64Decode(decrypt)
 }
+*/

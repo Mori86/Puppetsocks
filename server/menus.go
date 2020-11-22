@@ -44,4 +44,3 @@ func PrintBanner() {
 	TermEmu()
 
 }
-
