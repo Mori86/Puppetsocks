@@ -17,10 +17,16 @@ func TermEmu()  {
 		fmt.Print(string(colorRed), "[~]-> ")
 		text, _ := reader.ReadString('\n')
 		text = strings.Replace(text, "\n", "", -1)
-		if strings.Compare("list", text) == 0 {
+		if strings.Compare("1", text) == 0 {
 			fmt.Println("listing puppets...")
-		}else if strings.Compare("control", text) == 0 {
+		}else if strings.Compare("2", text) == 0 {
 			fmt.Println("fetching...")
+			ListBots()
+			fmt.Print(string(colorRed), "enter the ip address of the bot you want to control: ")
+			input, _ := reader.ReadString('\n')
+			input = strings.Replace(input, "\n", "", -1)
+			fmt.Println(string(colorRed), "initializing session....")
+			Interact("192.168.1.1")
 		}
 	}
 

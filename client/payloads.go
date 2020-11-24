@@ -5,6 +5,9 @@ import (
     "log"
      "net"
      "runtime"
+     "fmt"
+     "net/http"
+     "io/ioutil"
 )
 
 func getHostname() string{
@@ -44,5 +47,8 @@ func GetRealIP() string{
         fmt.Println("could not reach destination")
         return ""
     }
-    return resp
+    body, err := ioutil.ReadAll(resp.Body)
+    s := string(body)
+    return s
+
 }

