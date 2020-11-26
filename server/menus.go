@@ -26,7 +26,7 @@ func TermEmu()  {
 			input, _ := reader.ReadString('\n')
 			input = strings.Replace(input, "\n", "", -1)
 			fmt.Println(string(colorRed), "initializing session....")
-			Interact("192.168.1.1")
+			Interact(input)
 		}
 	}
 
